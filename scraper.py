@@ -1,11 +1,8 @@
 import time
-import urllib.request
-import json
-import mysql.connector
 import sys
 
-from gui_display import GuiDisplay
-from parse_engine import ParseEngine
+from app.main_app import MainApp
+from app.parse_engine import ParseEngine
 
 
 def main():
@@ -16,7 +13,7 @@ def main():
         url = sys.argv[0]
 
     parser: ParseEngine = ParseEngine(1)
-    display: GuiDisplay = GuiDisplay()
+    display: MainApp = MainApp()
 
     print("start")
     parser.start()
