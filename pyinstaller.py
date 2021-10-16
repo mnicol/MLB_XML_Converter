@@ -4,7 +4,8 @@ import zipfile
 import PyInstaller.__main__
 
 program_name = "mlb_data_converter"
-version = "1.0"
+version = "1.1.0"
+
 
 def build():
     # Remove existing build and dist directories

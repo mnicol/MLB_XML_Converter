@@ -31,8 +31,7 @@ class MainApp(tk.Tk):
             if self.config.contains("PARSE SETTINGS", "pollrate"):
                 poll_rate = int(self.config.get("PARSE SETTINGS", "pollrate"))
             self.parser: ParseEngine = ParseEngine(poll_rate, self, self._get_xml_keys())
-            # Width X Height
-            # self.geometry("720x575")
+
             self.title("MLB Data Converter")
 
             self.input_xml_file_path = "None selected"

@@ -71,19 +71,26 @@ class ParseThread (threading.Thread):
             self.stop()
             return
         logging.debug(f"XML: {xml_tree}")
-        root = None
+
+        # Get the root value and set the output root as it
+        input_root = xml_tree.getroot()
+        root = _add_key_to_xml_tree(input_root.tag)
+        logging.debug(f"Created Root ({root.tag})")
+
         for key_list in self.xml_keys:
+            # Remove the root since we already added it to the output xml
+            if input_root.tag in key_list:
+                key_list.remove(input_root.tag)
             xpath_key = f'.//{"/".join(key_list)}'
             logging.debug(f"Handle XPATH ({xpath_key})")
             xml_element = xml_tree.find(xpath_key)
-            if not root or key_list[0] not in root.tag:
-                root = _add_key_to_xml_tree(key_list[0])
-                logging.debug(f"Created Root ({root.tag})")
+
             temp_element = root
-            for key in key_list[1:]:
+            for key in key_list:
                 logging.debug(f"Adding Key ({key}) to element ({temp_element.tag})")
                 temp_element = _add_key_to_xml_tree(key, temp_element)
             temp_element.text = xml_element.text
+
         logging.debug("Done Processing XML")
         self.main_app.set_output_xml(root)
 
